@@ -1,4 +1,5 @@
 import express, { Express } from 'express';
+import './Database/mongo';
 import { Server, Socket } from 'socket.io';
 
 import dotenv from 'dotenv';
@@ -10,6 +11,7 @@ import { router } from './routes';
 import { onConnection } from './Sockets/socketRouter';
 
 dotenv.config();
+// db();
 
 const port = process.env.PORT;
 const app: Express = express();
