@@ -12,7 +12,25 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.onConnection = void 0;
 function onConnection(socket) {
     return __awaiter(this, void 0, void 0, function* () {
-        console.log('Socket Connected');
+        console.log(`user: ${socket.id} has connected to the socket channel`);
+        socket.on('join_rooms', (userData) => {
+            console.log(`${userData.username} has joined the following rooms: ${userData.rooms}`);
+            socket.join(userData.rooms);
+        });
+        socket.on('leave_rooms', (userData) => {
+            const rooms = userData.rooms;
+            rooms.forEach((room) => {
+                socket.leave(room);
+            });
+            console.log(`${userData.username} has left the following rooms: ${userData.rooms}`);
+        });
+        socket.on('send_message', (messageData) => {
+            console.log(`the following data was recieved from user: ${messageData.username}: ${messageData} \n the recipient(s) are in chatroom: ${messageData.chatId}`);
+            socket.broadcast.to(messageData.chatId).emit('recieve_message', messageData);
+        });
+        socket.on('disconnect', () => {
+            console.log(`user: ${socket.id} has disconnected from the socket channel`);
+        });
     });
 }
 exports.onConnection = onConnection;
