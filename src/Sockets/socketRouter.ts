@@ -5,7 +5,7 @@ import * as notifController from './sControllers/notifications';
 import { notif, messages } from '../Utilities/Strings/sockets';
 
 export async function onConnection (socket: Socket) {
-  console.log('Socket Connected')
+  console.log('Socket Connected', messages.example);
 
   socket.on(messages.example, messageController.example);
 

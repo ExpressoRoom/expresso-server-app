@@ -1,3 +1,3 @@
-export function example () {
-
+export function example (data: any) {
+  console.log(data);
 }
