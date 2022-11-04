@@ -2,34 +2,20 @@ import { Socket } from 'socket.io';
 import io from '../index';
 import * as messageController from './sControllers/messages';
 import * as notifController from './sControllers/notifications';
-import { notif, messages } from '../Utilities/Strings/sockets';
+import { notif, messages, rooms } from '../Utilities/Strings/sockets';
 import { Messages, User } from '../Utilities/Strings/interfaces/Chats';
 
 export async function onConnection (socket: Socket ) {
   console.log(`user: ${socket.id} has connected to the socket channel`);
 
-  socket.on('join_rooms', (userData: User): void => {
-    console.log(`${userData.username} has joined the following rooms: ${userData.rooms}`);
-    socket.join(userData.rooms);
-  })
+  socket.on(rooms.join, messageController.join.bind(socket))
 
-  socket.on('leave_rooms', (userData: User): void => {
-    const rooms: string[] = userData.rooms;
-    rooms.forEach((room: string): void => {
-      socket.leave(room)
-    });
-    console.log(`${userData.username} has left the following rooms: ${userData.rooms}`);
-  })
+  socket.on(rooms.leave, messageController.leave.bind(socket))
 
-  socket.on('send_message', (messageData: Messages): void => {
-    console.log(`the following data was recieved from user: ${messageData.username}: ${messageData} \n the recipient(s) are in chatroom: ${messageData.chatId}`);
-    socket.broadcast.to(messageData.chatId).emit('recieve_message', messageData);
-  })
+  socket.on(messages.send, messageController.send.bind(socket));
 
   socket.on('disconnect', (): void => {
     console.log(`user: ${socket.id} has disconnected from the socket channel`)
   })
-//   socket.on(messages.example, messageController.example);
 
-//   socket.on(notif.notifExample, notifController.notifExample);
 }
