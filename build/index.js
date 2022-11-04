@@ -4,6 +4,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
+require("./Database/mongo");
 const socket_io_1 = require("socket.io");
 const dotenv_1 = __importDefault(require("dotenv"));
 const morgan_1 = __importDefault(require("morgan"));
@@ -12,6 +13,7 @@ const http_1 = __importDefault(require("http"));
 const routes_1 = require("./routes");
 const socketRouter_1 = require("./Sockets/socketRouter");
 dotenv_1.default.config();
+// db();
 const port = process.env.PORT;
 const app = (0, express_1.default)();
 const server = app.listen(port, () => console.log(`Listening on Port: ${port}`));
