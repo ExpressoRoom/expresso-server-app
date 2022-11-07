@@ -34,13 +34,16 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.onConnection = void 0;
 const messageController = __importStar(require("./sControllers/messages"));
-const notifController = __importStar(require("./sControllers/notifications"));
 const sockets_1 = require("../Utilities/Strings/sockets");
 function onConnection(socket) {
     return __awaiter(this, void 0, void 0, function* () {
-        console.log('Socket Connected', sockets_1.messages.example);
-        socket.on(sockets_1.messages.example, messageController.example);
-        socket.on(sockets_1.notif.notifExample, notifController.notifExample);
+        console.log(`user: ${socket.id} has connected to the socket channel`);
+        socket.on(sockets_1.rooms.join, messageController.join.bind(socket));
+        socket.on(sockets_1.rooms.leave, messageController.leave.bind(socket));
+        socket.on(sockets_1.messages.send, messageController.send.bind(socket));
+        socket.on('disconnect', () => {
+            console.log(`user: ${socket.id} has disconnected from the socket channel`);
+        });
     });
 }
 exports.onConnection = onConnection;
