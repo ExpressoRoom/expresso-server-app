@@ -5,7 +5,7 @@ import { User } from "../../Utilities/Strings/interfaces/Chats";
 export function send (this: Socket, messageData: Messages): void {
   console.log(`
     the following data was recieved - user:
-    ${messageData.username} message: ${messageData.text} \n the recipient(s) are in chatroom: ${messageData.chatId}`);
+    ${messageData.username} message: ${messageData.text} \nthe recipient(s) are in chatroom: ${messageData.chatId}`);
   console.log(this.id, 'socket id');
   this.broadcast.to(messageData.chatId).emit('receive_message', messageData);
 }
