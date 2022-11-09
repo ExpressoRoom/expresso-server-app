@@ -1,4 +1,10 @@
 import { Router } from 'express';
+import { Socket } from 'socket.io';
+
+import { notif, messages, rooms } from './Utilities/Strings/sockets';
+import { Messages, User } from './Utilities/Strings/interfaces/Chats';
+import * as messageController from './Controllers/messages';
+import * as notifController from './Controllers/notifications';
 import * as NotesController from './Controllers/Notes';
 
 export const router = Router();
@@ -20,4 +26,20 @@ router.get('projects', NotesController.examplefunction);
 // ****************************** [INSERT COMPONENT NAME] ****************************** //
 
 
-// ****************************** [INSERT COMPONENT NAME] ****************************** //
+// ****************************** MESSAGES ****************************** //
+
+export async function socketRouter (socket: Socket ) {
+
+  console.log(`user: ${socket.id} has connected to the socket channel`);
+
+  socket.on(rooms.join, messageController.join.bind(socket));
+
+  socket.on(rooms.leave, messageController.leave.bind(socket));
+
+  socket.on(messages.send, messageController.send.bind(socket));
+
+  socket.on('disconnect', (): void => {
+    console.log(`user: ${socket.id} has disconnected from the socket channel`)
+  })
+
+}

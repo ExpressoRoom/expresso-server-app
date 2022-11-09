@@ -7,8 +7,8 @@ import morgan from 'morgan';
 import cors from 'cors';
 import http from 'http';
 
-import { router } from './routes';
-import { onConnection } from './Sockets/socketRouter';
+import { router, socketRouter } from './routes';
+
 
 dotenv.config();
 // db();
@@ -36,7 +36,6 @@ const io = new Server(socket, {
   }
 }).listen(server);
 
-io.on('connection', onConnection);
-
+io.on('connection', socketRouter);
 
 export default io;
