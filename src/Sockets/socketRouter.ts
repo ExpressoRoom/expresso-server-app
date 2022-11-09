@@ -8,9 +8,9 @@ import { Messages, User } from '../Utilities/Strings/interfaces/Chats';
 export async function onConnection (socket: Socket ) {
   console.log(`user: ${socket.id} has connected to the socket channel`);
 
-  socket.on(rooms.join, messageController.join.bind(socket))
+  socket.on(rooms.join, messageController.join.bind(socket));
 
-  socket.on(rooms.leave, messageController.leave.bind(socket))
+  socket.on(rooms.leave, messageController.leave.bind(socket));
 
   socket.on(messages.send, messageController.send.bind(socket));
 

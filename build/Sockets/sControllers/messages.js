@@ -2,9 +2,11 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.leave = exports.join = exports.send = void 0;
 function send(messageData) {
-    console.log(`the following data was recieved from user: ${messageData.username}: ${messageData} \nthe recipient(s) are in chatroom: ${messageData.chatId}`);
-    this.emit('receive_message', messageData);
-    // this.broadcast.to(messageData.chatId).emit('receive_message', messageData);
+    console.log(`
+    the following data was recieved - user:
+    ${messageData.username} message: ${messageData.text} \nthe recipient(s) are in chatroom: ${messageData.chatId}`);
+    console.log(this.id, 'socket id');
+    this.broadcast.to(messageData.chatId).emit('receive_message', messageData);
 }
 exports.send = send;
 function join(userData) {
