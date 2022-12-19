@@ -1,7 +1,6 @@
 import { Socket } from "socket.io";
-import { Messages } from "../Utilities/Interfaces/Chats";
-import { User } from "../Utilities/Strings/interfaces/Chats";
-import * as DB from "../DataAccess/messages";
+import { User, Messages } from "./../Utilities/Interfaces/Chats";
+import * as DB from "../DataAccess/mongo/messages";
 
 export function send (this: Socket, messageData: Messages): void {
   console.log(`

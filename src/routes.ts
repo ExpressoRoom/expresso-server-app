@@ -2,10 +2,11 @@ import { Router } from 'express';
 import { Socket } from 'socket.io';
 
 import { notif, messages, rooms } from './Utilities/Strings/sockets';
-import { Messages, User } from './Utilities/Strings/interfaces/Chats';
+import { Messages, User } from './Utilities/Interfaces/Chats';
 import * as messageController from './Controllers/messages';
 import * as notifController from './Controllers/notifications';
 import * as NotesController from './Controllers/Notes';
+import * as Users from './Controllers/Users';
 
 export const router = Router();
 
@@ -14,8 +15,9 @@ export const router = Router();
 router.get('projects', NotesController.examplefunction);
 
 
-// ****************************** [INSERT COMPONENT NAME] ****************************** //
+// ****************************** USERS ****************************** //
 
+router.post('newAccount', Users.createAccount);
 
 // ****************************** [INSERT COMPONENT NAME] ****************************** //
 
@@ -28,7 +30,7 @@ router.get('projects', NotesController.examplefunction);
 
 // ****************************** MESSAGES ****************************** //
 
-export async function socketRouter (socket: Socket ) {
+export async function socketRouter ( socket: Socket ) {
 
   console.log(`user: ${socket.id} has connected to the socket channel`);
 

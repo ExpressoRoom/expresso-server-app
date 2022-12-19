@@ -9,9 +9,21 @@ connect(`mongodb://localhost:27017/${process.env.DB_NAME}`)
   .catch(err => console.log(`Error connecting to ${process.env.DB_NAME}: ${err}`));
 
 const userSchema = new Schema ({
-  userID: String,
-  username: String,
-  chats: Array<String>,
+  userID: {
+    type: String,
+    unique: true,
+    required: true,
+    immutable: true
+  },
+  username: {
+    type: String,
+    required: true,
+    unique: true
+  },
+  chats: {
+    type: Array<String>,
+    default: []
+  }
 })
 
 const chatSchema = new Schema<I.Chat> ({

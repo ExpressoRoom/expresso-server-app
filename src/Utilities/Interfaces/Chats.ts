@@ -1,16 +1,22 @@
+export interface User {
+  userId: string,
+  username: string,
+  rooms: string[]
+}
+
 export interface Chat {
   chatName: string,
   users: string[],
-  messages: Messages[],
+  messages: Messages[]
 }
 
-export interface Messages{
+export interface Messages {
   chatId: string,
   messageId: string,
   username: string,
   text: string,
   time: Date,
-  reactions: Reactions,
+  reactions: Reactions
 }
 
 export interface Reactions {
